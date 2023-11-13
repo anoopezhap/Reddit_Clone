@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { updateName, updatePassword } from "./loginSlice";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../services/user";
+import ErrorAlert from "../../ui/ErrorAlert";
 
 function LoginInput() {
   const navigate = useNavigate();
@@ -34,6 +35,9 @@ function LoginInput() {
   return (
     <div className="h-screen flex bg-gray-300">
       <div className="w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16">
+        <div>
+          <ErrorAlert />
+        </div>
         <h1 className="text-2xl font-medium text-primary mt-4 mb-12 text-center">
           Log in to your account
         </h1>
