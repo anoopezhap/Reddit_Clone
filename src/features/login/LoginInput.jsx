@@ -1,11 +1,36 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { updateName, updatePassword } from "./loginSlice";
+import { useMutation } from "@tanstack/react-query";
+import { login } from "../../services/user";
 
 function LoginInput() {
   const navigate = useNavigate();
 
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("anoop@gmail.com");
+  const [password, setPassword] = useState("1234");
+
+  const dispatch = useDispatch();
+
+  const { isLoading, data, mutate } = useMutation({
+    mutationFn: ({ userName, password }) => login(userName, password),
+  });
+
+  function handleLogin(e) {
+    e.preventDefault();
+    //updating redux store
+
+    if (!userName && !password) return;
+
+    dispatch(updateName(userName));
+    dispatch(updatePassword(password));
+
+    mutate({ userName, password });
+
+    navigate("dashboard");
+  }
+
   return (
     <div className="h-screen flex bg-gray-300">
       <div className="w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16">
@@ -39,7 +64,7 @@ function LoginInput() {
           </div>
           <div className="flex justify-center items-center mt-6">
             <button
-              onClick={() => navigate("dashboard")}
+              onClick={handleLogin}
               className={`bg-green-300 py-2 px-4 text-sm text-white rounded border border-green focus:outline-none focus:border-green-dark`}
             >
               Login

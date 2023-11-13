@@ -9,36 +9,51 @@ import AllPosts from "./features/Posts/AllPosts";
 import MyPosts from "./features/Posts/MyPosts";
 import CreatePost from "./features/Posts/CreatePost";
 import Post from "./features/Posts/Post";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+//setting up query client
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0,
+    },
+  },
+});
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<AppLayout />}>
-          <Route path="login/dashboard/posts" element={<AllPosts />} />
-          <Route
-            path="login/:usedId/posts:postId"
-            element={<IndividualPost />}
-          />
-          <Route path="login/dashboard/:usedId/posts" element={<MyPosts />} />
-          <Route
-            path="login/dashboard/:userId/posts/:postId"
-            element={<Post />}
-          />
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <BrowserRouter>
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route path="login/dashboard/posts" element={<AllPosts />} />
+            <Route
+              path="login/:usedId/posts:postId"
+              element={<IndividualPost />}
+            />
+            <Route path="login/dashboard/:usedId/posts" element={<MyPosts />} />
+            <Route
+              path="login/dashboard/:userId/posts/:postId"
+              element={<Post />}
+            />
 
-          <Route
-            path="login/dashboard/:usedId/createPost"
-            element={<CreatePost />}
-          />
+            <Route
+              path="login/dashboard/:usedId/createPost"
+              element={<CreatePost />}
+            />
 
-          <Route path="*" element={<PageNotFound />} />
-          <Route path="login/dashboard" element={<Dashboard />} />
-        </Route>
-        <Route path="login" element={<Login />} />
+            <Route path="*" element={<PageNotFound />} />
+            <Route path="login/dashboard" element={<Dashboard />} />
+          </Route>
+          <Route path="login" element={<Login />} />
 
-        <Route index element={<Navigate replace to="login" />} />
-      </Routes>
-    </BrowserRouter>
+          <Route index element={<Navigate replace to="login" />} />
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
