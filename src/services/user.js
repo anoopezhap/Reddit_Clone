@@ -4,6 +4,7 @@ export async function getAllPosts() {
   const res = await fetch("http://localhost:3000/api/v1/threads/getAllThreads");
 
   const data = await res.json();
+  console.log(data);
 
   //console.log(res);
 
@@ -11,8 +12,6 @@ export async function getAllPosts() {
 }
 
 export async function login(email, password) {
-  console.log(email);
-  console.log(password);
   const res = await fetch("http://localhost:3000/api/v1/users/login", {
     method: "POST",
     body: JSON.stringify({
@@ -23,7 +22,10 @@ export async function login(email, password) {
   });
 
   const data = await res.json();
-  console.log(data);
+
+  if (data.status === "fail") {
+    throw new Error("Invalid email or password");
+  }
 
   return data;
 }
