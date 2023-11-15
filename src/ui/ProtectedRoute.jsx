@@ -6,16 +6,16 @@ function ProtectedRoute({ children }) {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+
   //load the access token
 
-  const token = useSelector((store) => store.auth.token);
-  const status = useSelector((store) => store.auth.status);
+  const token = localStorage.getItem("token");
 
   //while loading show a spinner
 
   //if there is no authenticated user redirect to login
 
-  if (!token || !status) {
+  if (!token) {
     navigate("/login", { replace: true });
   }
 

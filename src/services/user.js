@@ -31,7 +31,7 @@ export async function login(email, password) {
 }
 
 export async function getMyPosts(token) {
-  // console.log("token", token);
+  //console.log("token", token);
   const res = await fetch(
     "http://localhost:3000/api/v1/users/getAllMyThreads",
     {
@@ -77,4 +77,25 @@ export async function createPost(title, description, token) {
   }
 
   return data;
+}
+
+export async function getPostWithId(id, token) {
+  //console.log(id);
+  //console.log("token", token);
+  const res = await fetch(`http://localhost:3000/api/v1/threads/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  });
+
+  const data = await res.json();
+
+  if (data.status === "error") {
+    throw new Error("Something happend");
+  }
+
+  if (data.status === "success") {
+    return data;
+  }
 }

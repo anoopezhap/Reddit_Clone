@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 function CreatePost() {
   const { register, handleSubmit } = useForm();
 
-  const token = useSelector((store) => store.auth.token);
+  const token = localStorage.getItem("token");
 
   const navigate = useNavigate();
 

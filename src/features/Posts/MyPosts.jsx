@@ -6,7 +6,8 @@ import PostRow from "./PostRow";
 import { useNavigate } from "react-router";
 
 function MyPosts() {
-  const token = useSelector((store) => store.auth.token);
+  const token = localStorage.getItem("token");
+  //console.log(token);
 
   const navigate = useNavigate();
 
@@ -17,12 +18,8 @@ function MyPosts() {
   const { isLoading, data, error, isError } = useQuery({
     queryKey: ["myPosts"],
     queryFn: () => getMyPosts(token),
-    onError: () => {
-      console.log(error, isError);
-    },
-    onSuccess: () => {
-      console.log("isloading", isLoading, "error", error, "iserror", isError);
-    },
+    onError: (error) => {},
+    onSuccess: () => {},
   });
 
   if (!data) return;
@@ -40,11 +37,6 @@ function MyPosts() {
           ))}
         </div>
       )}
-      <div>
-        <Button type="primary" to="1234">
-          Get post with id
-        </Button>
-      </div>
     </div>
   );
 }

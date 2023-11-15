@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function PostRow({ post }) {
   const { id, title, description, user, likes, comments } = post;
 
@@ -8,12 +10,12 @@ function PostRow({ post }) {
           <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
             {user?.userName}
           </div>
-          <a
-            href="#"
+          <Link
+            to={`/dashboard/myposts/${id}`}
             className="block mt-1 text-lg leading-tight font-medium text-black hover:underline"
           >
             {title}
-          </a>
+          </Link>
           <p className="mt-2 text-gray-500">{description}</p>
           <div className="mt-4 flex items-center">
             <div className="flex items-center text-gray-600">

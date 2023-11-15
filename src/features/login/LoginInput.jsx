@@ -18,8 +18,11 @@ function LoginInput() {
   const { isLoading, mutate, error, isError, data, isSuccess } = useMutation({
     mutationFn: ({ userName, password }) => login(userName, password),
     onSuccess: (data) => {
-      dispatch(addToken(data.token));
-      dispatch(addStatus(data.status));
+      // dispatch(addToken(data.token));
+      // dispatch(addStatus(data.status));
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("username", data.user);
+      //localStorage.setItem("status", data.status);
       navigate("/dashboard");
     },
     onError: () => {
