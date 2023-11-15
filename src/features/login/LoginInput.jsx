@@ -17,10 +17,10 @@ function LoginInput() {
 
   const { isLoading, mutate, error, isError, data, isSuccess } = useMutation({
     mutationFn: ({ userName, password }) => login(userName, password),
-    onSuccess: () => {
-      navigate("dashboard");
-      //dispatch(addToken(data.token));
-      //dispatch(addStatus(data.status));
+    onSuccess: (data) => {
+      dispatch(addToken(data.token));
+      dispatch(addStatus(data.status));
+      navigate("/dashboard");
     },
     onError: () => {
       setUserName("");

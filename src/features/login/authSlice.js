@@ -12,9 +12,13 @@ const authSlice = createSlice({
     addStatus(state, action) {
       state.status = action.payload;
     },
+    logout(state, action) {
+      state.token = "";
+      state.status = "";
+    },
   },
 });
 
-export const { addToken, addStatus } = authSlice.actions;
+export const { addToken, addStatus, logout } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -6,10 +6,10 @@ function Dashboard() {
       <Button type="primary" to="posts">
         Get all posts
       </Button>
-      <Button type="primary" to="1234/posts">
+      <Button type="primary" to="myposts">
         Get my posts
       </Button>
-      <Button type="primary" to="1234/createpost">
+      <Button type="primary" to="createpost">
         Create Post
       </Button>
     </div>

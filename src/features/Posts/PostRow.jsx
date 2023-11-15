@@ -6,7 +6,7 @@ function PostRow({ post }) {
       <div className="md:flex">
         <div className="p-8">
           <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-            {user.userName}
+            {user?.userName}
           </div>
           <a
             href="#"
@@ -24,8 +24,10 @@ function PostRow({ post }) {
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               ></svg>
-              <span className="mr-2">Likes : {likes.length}</span>
-              <span className="font-semibold">Comments :{comments.length}</span>
+              <span className="mr-2">Likes : {likes?.length}</span>
+              <span className="font-semibold">
+                Comments :{comments?.length}
+              </span>
             </div>
             <div className="flex items-center ml-6 text-gray-600">
               <svg

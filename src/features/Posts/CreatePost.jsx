@@ -1,10 +1,27 @@
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { createPost } from "../../services/user";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 function CreatePost() {
   const { register, handleSubmit } = useForm();
 
+  const token = useSelector((store) => store.auth.token);
+
+  const navigate = useNavigate();
+
+  const { isLoading, mutate, isError, error } = useMutation({
+    mutationFn: ({ title, description, token }) =>
+      createPost(title, description, token),
+    onSuccess: () => {
+      navigate("/dashboard");
+    },
+  });
+
   function onSubmit(data) {
     console.log(data);
+    mutate({ title: data.title, description: data.description, token });
   }
 
   return (
