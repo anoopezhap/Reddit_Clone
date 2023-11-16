@@ -1,4 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
+import {
+  replaceEqualDeep,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { createPost } from "../../services/user";
 import { useSelector } from "react-redux";
@@ -9,19 +13,27 @@ function CreatePost() {
 
   const token = localStorage.getItem("token");
 
+  const queryClient = useQueryClient();
+
   const navigate = useNavigate();
 
-  const { isLoading, mutate, isError, error } = useMutation({
+  const createPostMutation = useMutation({
     mutationFn: ({ title, description, token }) =>
       createPost(title, description, token),
-    onSuccess: () => {
-      navigate("/dashboard");
+    onSuccess: (data) => {
+      //console.log(data);
+      queryClient.invalidateQueries(["posts", "myPosts"]);
+      navigate(`/dashboard/myposts/${data.data.id}`, { replace: true });
     },
   });
 
   function onSubmit(data) {
-    console.log(data);
-    mutate({ title: data.title, description: data.description, token });
+    //console.log(data);
+    createPostMutation.mutate({
+      title: data.title,
+      description: data.description,
+      token,
+    });
   }
 
   return (
@@ -52,6 +64,7 @@ function CreatePost() {
                 <button
                   className="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full 
                 focus:outline-none focus:shadow-outline"
+                  disabled={createPostMutation.isLoading}
                 >
                   Create Post
                 </button>

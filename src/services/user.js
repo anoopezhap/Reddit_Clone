@@ -56,7 +56,7 @@ export async function getMyPosts(token) {
 }
 
 export async function createPost(title, description, token) {
-  console.log(title, description);
+  //console.log(title, description);
 
   const res = await fetch("http://localhost:3000/api/v1/threads/createThread", {
     method: "POST",
@@ -98,4 +98,51 @@ export async function getPostWithId(id, token) {
   if (data.status === "success") {
     return data;
   }
+}
+
+export async function addComment(id, comment, token) {
+  //console.log(id, comment, token);
+  const res = await fetch(
+    `http://localhost:3000/api/v1/comments/${id}/addComment`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        comment: comment,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const data = await res.json();
+  console.log(data);
+
+  if (data.status === "fail") {
+    throw new Error("Please login to continue");
+  }
+
+  return data;
+}
+
+export async function deletePost(id, token) {
+  console.log(id, token);
+  const res = await fetch(`http://localhost:3000/api/v1/threads/${id}`, {
+    method: "PATCH",
+
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await res.json();
+  console.log(data);
+
+  if (data.status === "fail") {
+    throw new Error("You dont have access to delete this post");
+  }
+
+  return data;
 }

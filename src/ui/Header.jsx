@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Dashboard from "../pages/Dashboard";
 
 function Header() {
   //const username = useSelector((store) => store.user.username);
