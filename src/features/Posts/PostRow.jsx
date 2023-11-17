@@ -4,9 +4,12 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deletePost } from "../../services/user";
 import { toast } from "react-hot-toast";
+import EditPostForm from "./EditPostForm";
 
 function PostRow({ post }) {
   const { id, title, description, user, likes, comments } = post;
+
+  const [showEditPost, setShowEditPost] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -27,6 +30,20 @@ function PostRow({ post }) {
   function handleDelete() {
     deleteMutation.mutate({ id, token });
   }
+
+  function handleEditPost() {
+    setShowEditPost((state) => !state);
+  }
+
+  if (showEditPost)
+    return (
+      <EditPostForm
+        setShowEditPost={setShowEditPost}
+        title={title}
+        description={description}
+        id={id}
+      />
+    );
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
@@ -52,6 +69,13 @@ function PostRow({ post }) {
                 className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
               >
                 Delete
+              </button>
+              <button
+                onClick={handleEditPost}
+                type="button"
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+              >
+                Edit Post
               </button>
             </div>
             <div className="flex items-center ml-6 text-gray-600">

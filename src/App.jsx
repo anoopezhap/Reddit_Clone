@@ -12,6 +12,7 @@ import Post from "./features/Posts/Post";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import SignUp from "./pages/SignUp";
 
 //setting up query client
 
@@ -31,6 +32,7 @@ function App() {
         <Routes>
           <Route index element={<Navigate replace to="login" />} />
           <Route path="login" element={<Login />} />
+          <Route path="signup" element={<SignUp />} />
           <Route
             element={
               <ProtectedRoute>

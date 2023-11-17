@@ -16,8 +16,11 @@ function Header() {
   }
 
   return (
-    <header className="p-4 bg-gray-400">
-      {username ? `Welcome ${username}` : "Waiting to login"}
+    <header>
+      <span className="p-4 bg-gray-400">
+        {username ? `Welcome ${username}` : "Waiting to login"}
+      </span>
+
       <span className="float-right">
         <button onClick={handlelogout}>{token && "logout"}</button>
       </span>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { updateName, updatePassword } from "./loginSlice";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../services/user";
@@ -86,6 +86,15 @@ function LoginInput() {
             </button>
           </div>
         </form>
+        <p className="mt-10 text-center text-sm text-gray-500">
+          Not a member?
+          <Link
+            to="/signup"
+            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+          >
+            Click here to sign up
+          </Link>
+        </p>
       </div>
     </div>
   );

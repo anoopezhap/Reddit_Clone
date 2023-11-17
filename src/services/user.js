@@ -146,3 +146,69 @@ export async function deletePost(id, token) {
 
   return data;
 }
+
+export async function signUp(userName, email, password, confirmPassword) {
+  console.log(userName, email, password, confirmPassword);
+  const res = await fetch("http://localhost:3000/api/v1/users/signup", {
+    method: "POST",
+    body: JSON.stringify({
+      userName: userName,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  });
+
+  const data = await res.json();
+
+  if (data.status === "error") {
+    //console.log(data.error.errors);
+
+    const errorList = data.error.errors;
+
+    const messagesArray = errorList.map((el) => el.message);
+
+    const messages = messagesArray.toString();
+
+    //console.log(messages.toString());
+
+    throw new Error(messages);
+  }
+
+  console.log(data);
+
+  return data;
+}
+
+export async function editPost(title, description, token, id) {
+  console.log(title, "$$$", description, "$$$", token, "$$$", id);
+  const res = await fetch(
+    "http://localhost:3000/api/v1/threads/{id}/updateThread",
+    {
+      method: "PATCH",
+      body: JSON.stringify({
+        title: title,
+        description: description,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const data = await res.json();
+
+  console.log(data);
+
+  if (data.status === "error") {
+    throw new Error("This thread doesn't belongs to you");
+  }
+
+  console.log(data);
+
+  return data;
+}
