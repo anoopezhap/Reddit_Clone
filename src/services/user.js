@@ -184,9 +184,9 @@ export async function signUp(userName, email, password, confirmPassword) {
 }
 
 export async function editPost(title, description, token, id) {
-  console.log(title, "$$$", description, "$$$", token, "$$$", id);
+  //console.log(title, "$$$", description, "$$$", token, "$$$", id);
   const res = await fetch(
-    "http://localhost:3000/api/v1/threads/{id}/updateThread",
+    `http://localhost:3000/api/v1/threads/${id}/updateThread`,
     {
       method: "PATCH",
       body: JSON.stringify({
@@ -208,7 +208,7 @@ export async function editPost(title, description, token, id) {
     throw new Error("This thread doesn't belongs to you");
   }
 
-  console.log(data);
+  //console.log(data);
 
   return data;
 }

@@ -1,6 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { editPost } from "../../services/user";
+import { toast } from "react-hot-toast";
 
 function EditPostForm({ setShowEditPost, title, description, id }) {
   const { register, handleSubmit, setValue } = useForm({
@@ -9,9 +10,19 @@ function EditPostForm({ setShowEditPost, title, description, id }) {
 
   const token = localStorage.getItem("token");
 
+  const queryClient = useQueryClient();
+
   const editPostMutation = useMutation({
     mutationFn: ({ title, description, token, id }) =>
       editPost(title, description, token, id),
+    onSuccess: () => {
+      toast.success("post successfully edited");
+      queryClient.invalidateQueries(["posts"]);
+      queryClient.invalidateQueries(["myPosts"]);
+    },
+    onError: () => {
+      toast.error("This post doesn't belongs to you and you cant edit its");
+    },
   });
 
   function onSubmit(data) {
